@@ -32,7 +32,15 @@ console.log();
 // -----------------------------------
 console.log("4/ Implémentez une fonction qui prend en paramètre un tableau retourné par la fonction précédente et retourne la chaîne de caractère correspondante.");
 
-console.log();
+function formatPlayersName(sortedPlayers){
+    return sortedPlayers.join(", ");
+}
+const sortedPlayers = [
+    "José", "René", "Josette", "Monique", "Ginette"
+];
+
+const formattedNames = formatPlayersName(sortedPlayers);
+console.log(formattedNames);//?????????????
 
 // -----------------------------------
 console.log("5/ Implémentez une fonction qui compte dans le texte en premier paramètre, le nombre d'occurence de la lettre en second paramètre.");
