@@ -45,7 +45,19 @@ console.log(formattedNames);//?????????????
 // -----------------------------------
 console.log("5/ Implémentez une fonction qui compte dans le texte en premier paramètre, le nombre d'occurence de la lettre en second paramètre.");
 
-console.log();
+function countRepeatedOccurenceOfWords(txt) {
+    let words = {};
+    for (const word of txt.split('')) {
+        if (words[word] === undefined) {
+            words[word] = 1;
+        } else {
+            words[word]++;
+        }
+    }
+    return words;
+}
+
+console.log(countRepeatedOccurenceOfWords("Implémentez une fonction qui prend en paramètre un texte et retourne un objet comptant le nombre d'occurence de chaque mot"));
 
 // -----------------------------------
 console.log("6/ Implémentez une fonction qui retourne les X plus grandes valeurs d'un tableau.");
