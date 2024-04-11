@@ -1,12 +1,28 @@
 // -----------------------------------
 console.log("1/ Implémentez une fonction qui transforme un texte en camelCase.");
-
-console.log();
+function strCamelCase(a) {
+    var b = a.normalize('NFD').replace(/[\u0300-\u036f]/g, '').split(/[^A-Za-z0-9]/g);
+    b.forEach(function (c, d) {
+        b[d] = c.charAt(0).toUpperCase() + c.substr(1).toLowerCase();
+    });
+    return b.join('');
+}
+console.log(strCamelCase("Ceci est un texte"));
 
 // -----------------------------------
 console.log("2/ Implémentez une fonction qui retroune le plus grand mot d'un texte.");
 
-console.log();
+function returnMostWordOfText(text) {
+    const words = text.split(" ");
+    let mostWord = "";
+    for (let word of words) {
+        if (word.length > mostWord.length) {
+            mostWord = word;
+        }
+    }
+    return mostWord;
+}
+console.log(returnMostWordOfText("ceci est un super texte tres grand, ceci est anticonstitutionnel"));
 
 // -----------------------------------
 console.log("3/ Implémentez une fonction qui converti un nombre de seconde en un tableau exprimant cette durée en secondes, minutes, heures, jours, semaines et années.");
