@@ -80,6 +80,7 @@ console.log(getLongestWord2("une fonction qui converti un nombre de seconde en u
 // -----------------------------------
 console.log("3/ Implémentez une fonction qui converti un nombre de seconde en un tableau exprimant cette durée en secondes, minutes, heures, jours, semaines et années.");
 function transformTime(timeInS) {
+
     const years = Math.floor(timeInS / (60 * 60 * 24 * 365));
     const restofYear = timeInS % (60 * 60 * 24 * 365);
 
@@ -93,12 +94,13 @@ function transformTime(timeInS) {
         weeks,
         days
     ];
+
 }
 
 function transformTime2(seconds) {
     const dividers = [60, 60, 24, 7, 52];
     const duration = [seconds];
-    dividers.forEach(function(divider, i) {
+    dividers.forEach(function (divider, i) {
         duration.push(Math.floor(duration[i] / divider));
         duration[i] %= divider;
     });
@@ -111,38 +113,113 @@ console.log(transformTime2(315362222));
 
 // -----------------------------------
 console.log("4/ Implémentez une fonction qui prend en paramètre un tableau retourné par la fonction précédente et retourne la chaîne de caractère correspondante.");
-console.log();
+function getFormatDuration(durationArray) {
+    const units = ['second', 'minutes', 'hours', 'day', 'week', 'any'];
+    let formatDuration = '';
+
+    for (const index in durationArray) {
+        const i = parseInt(index);//La fonction parseInt() analyse une chaîne de caractère fournie en argument et renvoie un entier exprimé dans une base donnée.
+        if (durationArray[i] !== 0) {
+            formatDuration += durationArray[i] + " " + units[i];
+            if (durationArray[i] > 1) {
+                formatDuration += ' ';
+            }
+        }
+    }
+    return formatDuration;
+}
+
+const durationArray = transformTime2(315362222);
+console.log(getFormatDuration(durationArray));
 
 // -----------------------------------
-// console.log("5/ Implémentez une fonction qui compte dans le texte en premier paramètre, le nombre d'occurence de la lettre en second paramètre.");
-
-// console.log();
-
-// -----------------------------------
-// console.log("6/ Implémentez une fonction qui retourne les X plus grandes valeurs d'un tableau.");
-
-// console.log();
-
-// -----------------------------------
-// console.log("7/ Retournez la liste des prenoms des joueurs ci-dessous par ordre de score décroissant.");
-
-// const players  = {
-//     Camille: 88,
-//     Lola: 125,
-//     Isaac: 174,
-//     Aldrick: 426,
-//     Ismaël: 248,
-//     Lilian: 478,
-//     Charley: 225,
-//     Thierry: 255,
-//     Cameron: 205,
-//     Tanguy: 155,
-//     Jenny: 125
-// };
-
-// console.log();
+console.log("5/ Implémentez une fonction qui compte dans le texte en premier paramètre, le nombre d'occurence de la lettre en second paramètre.");
+function countRepeatedOccurenceOfWords(txt) {
+    let words = {};
+    const textWithoutSpaces = txt.replace(/\s/g, '');
+    for (const word of textWithoutSpaces) {
+        if (words[word] === undefined) {
+            words[word] = 1;
+        } else {
+            words[word]++;
+        }
+    }
+    return words;
+}
+console.log(countRepeatedOccurenceOfWords(`Notre monde n'est pas illimité`));
 
 // -----------------------------------
-// console.log("8/ Dans la liste des scores ci-dessus sélectionnez une partie des meilleurs joueurs jusqu'à obtenir un total de score des joueurs sélectionnés de 1000.");
+console.log("6/ Implémentez une fonction qui retourne les X plus grandes valeurs d'un tableau.");
 
-// console.log();
+function getXHighestValues(arr, x) {
+    // Vérifier si x est supérieur à la longueur du tableau
+    if (x >= arr.length) {
+        return arr.sort((a, b) => b - a);
+    } else {
+        // Copier le tableau pour éviter de modifier l'original
+        const sortedArray = [...arr].sort((a, b) => b - a);
+        // Extraire les X premiers éléments du tableau trié
+        return sortedArray.slice(0, x);
+    }
+}
+const numbers = [58, 98, 65, 45, 78]
+const x = 3; //Récupérer les 3 plus grandes valeurs
+console.log(getXHighestValues(numbers, x));
+
+// -----------------------------------
+console.log("7/ Retournez la liste des prenoms des joueurs ci-dessous par ordre de score décroissant.");
+
+const players = {
+    Camille: 88,
+    Lola: 125,
+    Isaac: 174,
+    Aldrick: 426,
+    Ismaël: 248,
+    Lilian: 478,
+    Charley: 225,
+    Thierry: 255,
+    Cameron: 205,
+    Tanguy: 155,
+    Jenny: 125
+};
+
+function getPlayersByScore(players) {
+    // Convertir l'objet en tableau de tableaux [nom, score]
+    const playerArray = Object.entries(players);
+    // Trier le tableau en fonction des scores (ordre décroissant)
+    playerArray.sort((a, b) => b[1] - a[1]);
+    const sortedNames = playerArray.map(player => player[0]);
+    // Extraire les prénoms des joueurs triés
+    return sortedNames;
+}
+const sortedNames = getPlayersByScore(players);
+console.log(sortedNames);
+
+// -----------------------------------
+console.log("8/ Dans la liste des scores ci-dessus sélectionnez une partie des meilleurs joueurs jusqu'à obtenir un total de score des joueurs sélectionnés de 1000.");
+
+function selectPlayersForTotalScore(players, targetTotal) {
+    // Convertir l'objet en tableau de tableaux [nom, score]
+    let selectedPlayers = [];
+    let totalScore = 0;
+    const playerArray = Object.entries(players);
+
+    // Trier le tableau en fonction des scores (ordre décroissant)
+    playerArray.sort((a, b) => b[1] - a[1]);
+
+    for (const [name, score] of playerArray) {
+        // Ajouter le joueur et son score à la liste sélectionnée
+        selectedPlayers.push({ name, score });
+        // Mettre à jour le total du score
+        totalScore += score;
+        // Vérifier si le total dépasse ou atteint la cible
+        if (totalScore >= targetTotal) {
+            break;
+        }
+    }
+
+    return selectedPlayers;
+}
+
+const selectedPlayers = selectPlayersForTotalScore(players, 1000);
+console.log(selectedPlayers);
